@@ -12,12 +12,18 @@ jobs:
     strategy:
       matrix:
         php: [8.3, 8.4]
+        laravel: ['11.*', '12.*', '13.*']
+        exclude:
+          - php: 8.3
+            laravel: '13.*' # If Laravel 13 requires 8.4
     
     name: PHP ${{ matrix.php }}
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        env:
+          FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
