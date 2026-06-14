@@ -1,0 +1,95 @@
+# Laravel Model Context Protocol (MCP) Server Core
+
+## 📰 Origin Main Flagship Project
+> This open-source package is the official implementation companion for **[Origin Main: Laravel AI Architecture](https://originmain.com)**. Read our deep-dive architectural analysis: **[Building an Enterprise-Grade Local MCP Server in Laravel from Scratch](https://originmain.com/posts/laravel-mcp-server)**.
+
+---
+
+An enterprise-grade, zero-bloat local Model Context Protocol (MCP) Server running natively over standard input/output (`stdio`) streams inside Laravel. This package exposes your application's routing landscape, database structural schemas, and safe diagnostic metrics directly to local LLM-powered IDE tools (like Cursor, Claude Desktop, or Windsurf) with zero HTTP footprint.
+
+## ⚡ Key Architectural Advantages
+
+* **Stream Isolation Guarantee:** Automatically silences Laravel kernel output strings (`VERBOSITY_QUIET`), routing all debug diagnostic errors directly to `STDERR`. This ensures `STDOUT` remains unpolluted for clean JSON-RPC 2.0 protocol frames.
+* **Strict Security Boundaries:** Out-of-the-box protection using an unbreachable whitelist model for console operations, preventing unauthorized tool execution or malicious shell argument injection.
+* **Scale-Optimized Memory Layer:** Built-in O(1) memory memoization ensures near-instant routing payload transfers, even inside massive enterprise codebases with thousands of endpoints.
+* **Native Compliance:** Built from the ground up targeting the anniversary `2025-11-25` Model Context Protocol Specification.
+
+---
+
+## 📦 Installation & Setup
+
+### 1. Requirements
+* PHP ^8.2
+* Laravel 10.x or 11.x
+
+### 2. Install the Package via Composer
+```bash
+composer require origin-main/laravel-mcp --dev
+```
+
+*The Service Provider automatically wires itself up using Laravel's native package autodiscovery mechanics.*
+
+---
+
+## 🛠️ Provided LLM Context Tools
+
+Once linked, the package exposes the following capabilities directly into your AI context window:
+
+| Tool Identifier | Input Arguments | Functional Description |
+| :--- | :--- | :--- |
+| `list_routes` | *None* | Compiles an optimized map of URIs, HTTP verbs, Actions, names, and applied middlewares. |
+| `read_model_schema` | `model` *(string)* | Uses runtime Reflection to extract database data types, nullability, and Eloquent relationships. |
+| `run_safe_artisan` | `command` *(string)* | Executes safe read-only operations (`about`, `route:list`, `config:show`, `model:show`). |
+
+---
+
+## 🔌 Connecting to Local AI Clients
+
+To attach this server framework to your IDE environment, register the Artisan command within your client configuration block.
+
+### Claude Desktop Configuration
+Add the following snippet to your `claude_desktop_config.json` file:
+
+```json
+{
+  "mcpServers": {
+    "laravel-mcp": {
+      "command": "php",
+      "args": [
+        "/path/to/your/laravel-app/artisan",
+        "mcp:serve"
+      ]
+    }
+  }
+}
+```
+
+### Cursor / Windsurf Integration
+1. Navigate to your IDE's advanced settings window (**Features > MCP**).
+2. Click **+ Add New MCP Server**.
+3. Set the Type to `stdio`.
+4. Define the command payload array target:
+```bash
+   php /path/to/your/laravel-app/artisan mcp:serve
+   ```
+
+---
+
+## 🛡️ Security Posture
+
+This package enforces a zero-trust model by default. The `run_safe_artisan` tool contains an immutable execution boundary whitelist:
+```php
+private const WHITELIST = [
+    'about',
+    'route:list',
+    'config:show',
+    'model:show',
+];
+```
+Any execution request pointing to destructive commands (e.g., `migrate:fresh`, `db:seed`, or custom application commands) is instantly dropped before reaching the Laravel command bus.
+
+---
+
+## 📜 License
+
+The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
