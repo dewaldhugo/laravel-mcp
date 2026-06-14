@@ -13,6 +13,13 @@ class McpServeCommand extends Command
     private bool $initialized = false;
     private const PROTOCOL_VERSION = '2025-11-25';
 
+    /**
+     * Stream pointers for IO operations. Can be overridden during testing.
+     */
+    public mixed $inputStream = null;
+    public mixed $outputStream = null;
+    public mixed $errorStream = null;
+
     public function handle(): int
     {
         ini_set('memory_limit', '-1');
@@ -20,9 +27,11 @@ class McpServeCommand extends Command
 
         $this->output->getOutput()->setVerbosity(\Symfony\Component\Console\Output\OutputInterface::VERBOSITY_QUIET);
 
+        $input = $this->inputStream ?? STDIN;
+
         $this->logDebug('MCP Server initialized. Awaiting JSON-RPC frames on stdin...');
 
-        while ($line = fgets(STDIN)) {
+        while ($line = fgets($input)) {
             $line = trim($line);
             if (empty($line)) {
                 continue;
@@ -160,8 +169,9 @@ class McpServeCommand extends Command
             'result' => $result
         ];
 
-        fwrite(STDOUT, json_encode($response, JSON_UNESCAPED_SLASHES) . "\n");
-        fflush(STDOUT);
+        $output = $this->outputStream ?? STDOUT;
+        fwrite($output, json_encode($response, JSON_UNESCAPED_SLASHES) . "\n");
+        fflush($output);
     }
 
     private function sendError(?int $id, int $code, string $message, mixed $data = null): void
@@ -179,13 +189,15 @@ class McpServeCommand extends Command
             $response['error']['data'] = $data;
         }
 
-        fwrite(STDOUT, json_encode($response, JSON_UNESCAPED_SLASHES) . "\n");
-        fflush(STDOUT);
+        $output = $this->outputStream ?? STDOUT;
+        fwrite($output, json_encode($response, JSON_UNESCAPED_SLASHES) . "\n");
+        fflush($output);
     }
 
     private function logDebug(string $message): void
     {
-        fwrite(STDERR, sprintf("[%s] [DEBUG] %s\n", date('Y-m-d H:i:s'), $message));
-        fflush(STDERR);
+        $error = $this->errorStream ?? STDERR;
+        fwrite($error, sprintf("[%s] [DEBUG] %s\n", date('Y-m-d H:i:s'), $message));
+        fflush($error);
     }
 }
