@@ -11,7 +11,7 @@ class McpServeCommand extends Command
     protected $description = 'Start the local Model Context Protocol (MCP) server over stdio';
 
     private bool $initialized = false;
-    private const PROTOCOL_VERSION = '2024-11-05';
+    private const PROTOCOL_VERSION = '2025-11-25';
 
     public function handle(): int
     {
