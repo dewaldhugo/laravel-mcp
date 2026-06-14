@@ -1,9 +1,9 @@
 <?php
 
-namespace OriginMain\LaravelMcp\Tests;
+namespace DewaldHugo\LaravelMcp\Tests;
 
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
-use OriginMain\LaravelMcp\McpServiceProvider;
+use DewaldHugo\LaravelMcp\McpServiceProvider;
 
 abstract class TestCase extends OrchestraTestCase
 {

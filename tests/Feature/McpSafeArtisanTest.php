@@ -1,8 +1,8 @@
 <?php
 
-namespace OriginMain\LaravelMcp\Tests;
+namespace DewaldHugo\LaravelMcp\Tests;
 
-use OriginMain\LaravelMcp\Services\Tools\RunSafeArtisan;
+use DewaldHugo\LaravelMcp\Services\Tools\RunSafeArtisan;
 
 class McpSafeArtisanTest extends TestCase
 {

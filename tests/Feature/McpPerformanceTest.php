@@ -1,8 +1,8 @@
 <?php
 
-namespace OriginMain\LaravelMcp\Tests;
+namespace DewaldHugo\LaravelMcp\Tests;
 
-use OriginMain\LaravelMcp\Services\Tools\ListRoutes;
+use DewaldHugo\LaravelMcp\Services\Tools\ListRoutes;
 
 class McpPerformanceTest extends TestCase
 {

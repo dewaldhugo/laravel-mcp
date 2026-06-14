@@ -1,9 +1,9 @@
 <?php
 
-namespace OriginMain\LaravelMcp\Commands;
+namespace DewaldHugo\LaravelMcp\Commands;
 
 use Illuminate\Console\Command;
-use OriginMain\LaravelMcp\Services\ToolRegistry;
+use DewaldHugo\LaravelMcp\Services\ToolRegistry;
 use Throwable;
 
 class McpServeCommand extends Command

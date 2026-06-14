@@ -1,13 +1,13 @@
 <?php
 
-namespace OriginMain\LaravelMcp;
+namespace DewaldHugo\LaravelMcp;
 
 use Illuminate\Support\ServiceProvider;
-use OriginMain\LaravelMcp\Commands\McpServeCommand;
-use OriginMain\LaravelMcp\Services\ToolRegistry;
-use OriginMain\LaravelMcp\Services\Tools\ListRoutes;
-use OriginMain\LaravelMcp\Services\Tools\ReadModelSchema;
-use OriginMain\LaravelMcp\Services\Tools\RunSafeArtisan;
+use DewaldHugo\LaravelMcp\Commands\McpServeCommand;
+use DewaldHugo\LaravelMcp\Services\ToolRegistry;
+use DewaldHugo\LaravelMcp\Services\Tools\ListRoutes;
+use DewaldHugo\LaravelMcp\Services\Tools\ReadModelSchema;
+use DewaldHugo\LaravelMcp\Services\Tools\RunSafeArtisan;
 
 class McpServiceProvider extends ServiceProvider
 {

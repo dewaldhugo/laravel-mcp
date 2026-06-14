@@ -1,8 +1,8 @@
 <?php
 
-namespace OriginMain\LaravelMcp\Services;
+namespace DewaldHugo\LaravelMcp\Services;
 
-use OriginMain\LaravelMcp\Contracts\ToolInterface;
+use DewaldHugo\LaravelMcp\Contracts\ToolInterface;
 
 class ToolRegistry
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace OriginMain\LaravelMcp\Tests;
+namespace DewaldHugo\LaravelMcp\Tests;
 
-use OriginMain\LaravelMcp\Commands\McpServeCommand;
+use DewaldHugo\LaravelMcp\Commands\McpServeCommand;
 
 class McpHandshakeTest extends TestCase
 {

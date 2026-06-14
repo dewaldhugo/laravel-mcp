@@ -1,11 +1,11 @@
 <?php
 
-namespace OriginMain\LaravelMcp\Services\Tools;
+namespace DewaldHugo\LaravelMcp\Services\Tools;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\Schema;
-use OriginMain\LaravelMcp\Contracts\ToolInterface;
+use DewaldHugo\LaravelMcp\Contracts\ToolInterface;
 use ReflectionClass;
 use ReflectionMethod;
 use Throwable;

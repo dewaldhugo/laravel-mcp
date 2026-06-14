@@ -1,8 +1,8 @@
 <?php
 
-namespace OriginMain\LaravelMcp\Tests;
+namespace DewaldHugo\LaravelMcp\Tests;
 
-use OriginMain\LaravelMcp\Services\Tools\ReadModelSchema;
+use DewaldHugo\LaravelMcp\Services\Tools\ReadModelSchema;
 
 class McpModelSchemaTest extends TestCase
 {
