@@ -5,7 +5,8 @@
     "type": "library",
     "authors": [
         {
-            "name": "Dewald Hugo"
+            "name": "Dewald Hugo",
+            "email": "dewaldhugo@gmail.com"
         }
     ],
     "require": {
