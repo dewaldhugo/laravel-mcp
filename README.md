@@ -1,18 +1,16 @@
 # Laravel Model Context Protocol (MCP) Server Core
 
-## 📰 Origin Main Flagship Project
-> This open-source package is the official implementation companion for **[Origin Main: Laravel AI Architecture](https://originmain.com)**. Read our deep-dive architectural analysis: **[Building an Enterprise-Grade Local MCP Server in Laravel from Scratch](https://originmain.com/posts/laravel-mcp-server)**.
 
----
+An enterprise-grade, zero-network-bloat local Model Context Protocol (MCP) Server running natively over standard input/output (`stdio`) streams inside Laravel. This package exposes your application's routing landscape, database structural schemas, and safe diagnostic metrics directly to local LLM-powered IDE tools (like Cursor, Claude Desktop, or Windsurf) with zero HTTP or network footprint.
 
-An enterprise-grade, zero-bloat local Model Context Protocol (MCP) Server running natively over standard input/output (`stdio`) streams inside Laravel. This package exposes your application's routing landscape, database structural schemas, and safe diagnostic metrics directly to local LLM-powered IDE tools (like Cursor, Claude Desktop, or Windsurf) with zero HTTP footprint.
+For comprehensive deep-dives into Laravel-driven AI engineering patterns, architecture, and production practices, check out **[Origin Main](https://origin-main.com/)**.
 
-## ⚡ Key Architectural Advantages
+## ⚡ Key Architectural Features
 
-* **Stream Isolation Guarantee:** Automatically silences Laravel kernel output strings (`VERBOSITY_QUIET`), routing all debug diagnostic errors directly to `STDERR`. This ensures `STDOUT` remains unpolluted for clean JSON-RPC 2.0 protocol frames.
-* **Strict Security Boundaries:** Out-of-the-box protection using an unbreachable whitelist model for console operations, preventing unauthorized tool execution or malicious shell argument injection.
-* **Scale-Optimized Memory Layer:** Built-in O(1) memory memoization ensures near-instant routing payload transfers, even inside massive enterprise codebases with thousands of endpoints.
-* **Native Compliance:** Built from the ground up targeting the anniversary `2025-11-25` Model Context Protocol Specification.
+* **Stream Isolation Guarantee:** Automatically forces Laravel kernel outputs to silence (`VERBOSITY_QUIET`), safely routing any background exceptions or debug traces directly to `STDERR`. This guarantees that `STDOUT` remains unpolluted for exact JSON-RPC 2.0 framing.
+* **Strict Security Boundaries:** Implements an unbreachable whitelist model for console actions, preventing unauthorized tool execution or malicious shell argument injection patterns.
+* **Scale-Optimized Memory Layer:** Built-in O(1) memory memoization structures optimize route and schema processing inside large-scale codebases containing thousands of endpoints.
+* **Native Compliance:** Target-engineered from the ground up matching the core Model Context Protocol Specification.
 
 ---
 
@@ -24,7 +22,7 @@ An enterprise-grade, zero-bloat local Model Context Protocol (MCP) Server runnin
 
 ### 2. Install the Package via Composer
 ```bash
-composer require origin-main/laravel-mcp --dev
+composer require dewaldhugo/laravel-mcp --dev
 ```
 
 *The Service Provider automatically wires itself up using Laravel's native package autodiscovery mechanics.*
