@@ -40,5 +40,7 @@
                 "DewaldHugo\\LaravelMcp\\McpServiceProvider"
             ]
         }
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
