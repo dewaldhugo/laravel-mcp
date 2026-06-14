@@ -7,6 +7,16 @@ use OriginMain\LaravelMcp\Contracts\ToolInterface;
 
 class ListRoutes implements ToolInterface
 {
+    /**
+     * Internal memory cache for compiled routing maps.
+     */
+    private ?array $cachedRoutes = null;
+
+    /**
+     * Stored tracking integer to detect real-time framework route modifications.
+     */
+    private ?int $cachedRouteCount = null;
+
     public function getName(): string
     {
         return 'list_routes';
@@ -27,13 +37,20 @@ class ListRoutes implements ToolInterface
 
     public function execute(array $arguments): array
     {
-        $routes = Route::getRoutes()->getRoutes();
+        $routeCollection = Route::getRoutes();
+        $currentCount = $routeCollection->count();
+
+        // Performance Boundary: Serve immediately from memory if router state is unchanged
+        if ($this->cachedRoutes !== null && $this->cachedRouteCount === $currentCount) {
+            return $this->formatResponse($this->cachedRoutes);
+        }
+
+        $routes = $routeCollection->getRoutes();
         $mappedRoutes = [];
 
         foreach ($routes as $route) {
             $action = $route->getActionName();
             
-            // Handle and normalize anonymous closures safely
             if ($action instanceof \Closure || $action === 'Closure') {
                 $action = 'Closure (Anonymous)';
             }
@@ -47,11 +64,23 @@ class ListRoutes implements ToolInterface
             ];
         }
 
+        // Hydrate the runtime lifecycle cache
+        $this->cachedRoutes = $mappedRoutes;
+        $this->cachedRouteCount = $currentCount;
+
+        return $this->formatResponse($mappedRoutes);
+    }
+
+    /**
+     * Standardize the output envelope format.
+     */
+    private function formatResponse(array $routes): array
+    {
         return [
             'content' => [
                 [
                     'type' => 'text',
-                    'text' => json_encode($mappedRoutes, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES)
+                    'text' => json_encode($routes, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES)
                 ]
             ]
         ];
