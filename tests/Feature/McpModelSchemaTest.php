@@ -11,7 +11,6 @@ class McpModelSchemaTest extends TestCase
         $tool = new ReadModelSchema();
         $result = $tool->execute(['model' => 'NonExistent\ClassPath']);
 
-        $this->assertArrayHasKey('isError', $result);
         $this->assertTrue($result['isError']);
         $this->assertStringContainsString("does not exist", $result['content'][0]['text']);
     }
