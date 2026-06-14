@@ -1,9 +1,9 @@
 <?php
 
-namespace OriginMain\LaravelMcp\Services\Tools;
+namespace DewaldHugo\LaravelMcp\Services\Tools;
 
 use Illuminate\Support\Facades\Artisan;
-use OriginMain\LaravelMcp\Contracts\ToolInterface;
+use DewaldHugo\LaravelMcp\Contracts\ToolInterface;
 use Throwable;
 
 class RunSafeArtisan implements ToolInterface

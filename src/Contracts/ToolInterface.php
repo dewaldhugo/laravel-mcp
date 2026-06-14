@@ -1,6 +1,6 @@
 <?php
 
-namespace OriginMain\LaravelMcp\Contracts;
+namespace DewaldHugo\LaravelMcp\Contracts;
 
 interface ToolInterface
 {

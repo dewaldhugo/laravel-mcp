@@ -1,8 +1,8 @@
 <?php
 
-namespace OriginMain\LaravelMcp\Tests;
+namespace DewaldHugo\LaravelMcp\Tests;
 
-use OriginMain\LaravelMcp\Services\Tools\ReadModelSchema;
+use DewaldHugo\LaravelMcp\Services\Tools\ReadModelSchema;
 
 class McpModelSchemaTest extends TestCase
 {
@@ -11,7 +11,6 @@ class McpModelSchemaTest extends TestCase
         $tool = new ReadModelSchema();
         $result = $tool->execute(['model' => 'NonExistent\ClassPath']);
 
-        $this->assertArrayHasKey('isError', $result);
         $this->assertTrue($result['isError']);
         $this->assertStringContainsString("does not exist", $result['content'][0]['text']);
     }

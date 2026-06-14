@@ -1,9 +1,9 @@
 <?php
 
-namespace OriginMain\LaravelMcp\Services\Tools;
+namespace DewaldHugo\LaravelMcp\Services\Tools;
 
 use Illuminate\Support\Facades\Route;
-use OriginMain\LaravelMcp\Contracts\ToolInterface;
+use DewaldHugo\LaravelMcp\Contracts\ToolInterface;
 
 class ListRoutes implements ToolInterface
 {

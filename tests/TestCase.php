@@ -1,16 +1,21 @@
 <?php
 
-namespace OriginMain\LaravelMcp\Tests;
+namespace DewaldHugo\LaravelMcp\Tests;
 
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
-use OriginMain\LaravelMcp\McpServiceProvider;
+use DewaldHugo\LaravelMcp\McpServiceProvider;
 
 abstract class TestCase extends OrchestraTestCase
 {
-    protected function getPackageProviders($app): array
+    protected function getPackageProviders($app)
     {
-        return [
-            McpServiceProvider::class,
-        ];
+        return [McpServiceProvider::class];
+    }
+
+    protected function getEnvironmentSetUp($app)
+    {
+        $app['config']->set('mcp.enabled', true);
+        // Ensure cache persists within the test process memory
+        $app['config']->set('cache.default', 'array');
     }
 }
