@@ -3,6 +3,7 @@
 namespace OriginMain\LaravelMcp\Commands;
 
 use Illuminate\Console\Command;
+use OriginMain\LaravelMcp\Services\ToolRegistry;
 use Throwable;
 
 class McpServeCommand extends Command
@@ -13,12 +14,17 @@ class McpServeCommand extends Command
     private bool $initialized = false;
     private const PROTOCOL_VERSION = '2025-11-25';
 
-    /**
-     * Stream pointers for IO operations. Can be overridden during testing.
-     */
     public mixed $inputStream = null;
     public mixed $outputStream = null;
     public mixed $errorStream = null;
+
+    private ToolRegistry $registry;
+
+    public function __construct(ToolRegistry $registry)
+    {
+        parent::__construct();
+        $this->registry = $registry;
+    }
 
     public function handle(): int
     {
@@ -82,7 +88,11 @@ class McpServeCommand extends Command
                 break;
 
             case 'tools/list':
-                $this->handleToolsList($id);
+                $this->sendResponse($id, ['tools' => $this->registry->listTools()]);
+                break;
+
+            case 'tools/call':
+                $this->handleToolExecution($id, $payload['params'] ?? []);
                 break;
 
             default:
@@ -115,48 +125,30 @@ class McpServeCommand extends Command
         $this->sendResponse($id, $response);
     }
 
-    private function handleToolsList(?int $id): void
+    private function handleToolExecution(?int $id, array $params): void
     {
-        $tools = [
-            [
-                'name' => 'list_routes',
-                'description' => 'Parses the framework router to output clean endpoints, controller mappings, and HTTP methods.',
-                'inputSchema' => [
-                    'type' => 'object',
-                    'properties' => (object)[]
-                ]
-            ],
-            [
-                'name' => 'read_model_schema',
-                'description' => 'Inspects database columns, data types, and Eloquent relationships via reflection.',
-                'inputSchema' => [
-                    'type' => 'object',
-                    'properties' => [
-                        'model' => [
-                            'type' => 'string',
-                            'description' => 'The fully qualified class name of the Eloquent model (e.g., App\\Models\\User).'
-                        ]
-                    ],
-                    'required' => ['model']
-                ]
-            ],
-            [
-                'name' => 'run_safe_artisan',
-                'description' => 'Executes a strict whitelist of read-only console operations.',
-                'inputSchema' => [
-                    'type' => 'object',
-                    'properties' => [
-                        'command' => [
-                            'type' => 'string',
-                            'description' => 'The whitelisted artisan command to run (e.g., route:list, config:show).'
-                        ]
-                    ],
-                    'required' => ['command']
-                ]
-            ]
-        ];
+        $name = $params['name'] ?? null;
+        $arguments = $params['arguments'] ?? [];
 
-        $this->sendResponse($id, ['tools' => $tools]);
+        if (!$name) {
+            $this->sendError($id, -32602, 'Invalid params: Missing execution tool name.');
+            return;
+        }
+
+        $tool = $this->registry->get($name);
+
+        if (!$tool) {
+            $this->sendError($id, -32601, "Tool execution targeting unknown context: {$name}");
+            return;
+        }
+
+        try {
+            $result = $tool->execute($arguments);
+            $this->sendResponse($id, $result);
+        } catch (Throwable $e) {
+            $this->logDebug("Tool Execution Failure [{$name}]: " . $e->getMessage());
+            $this->sendError($id, -32603, "Tool execution encountered an internal error.");
+        }
     }
 
     private function sendResponse(?int $id, array $result): void
