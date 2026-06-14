@@ -14,9 +14,18 @@
         "illuminate/console": "^10.0|^11.0",
         "illuminate/support": "^10.0|^11.0"
     },
+    "require-dev": {
+        "phpunit/phpunit": "^10.5|^11.0",
+        "orchestra/testbench": "^8.0|^9.0"
+    },
     "autoload": {
         "psr-4": {
             "OriginMain\\LaravelMcp\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "OriginMain\\LaravelMcp\\Tests\\": "tests/"
         }
     },
     "extra": {
