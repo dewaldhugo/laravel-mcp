@@ -1,0 +1,29 @@
+{
+    "name": "origin-main/laravel-mcp",
+    "description": "Local Model Context Protocol (MCP) Server for Laravel AI Architecture",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Origin Main",
+            "email": "author@originmain.com"
+        }
+    ],
+    "require": {
+        "php": "^8.2",
+        "illuminate/console": "^10.0|^11.0",
+        "illuminate/support": "^10.0|^11.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "OriginMain\\LaravelMcp\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "OriginMain\\LaravelMcp\\McpServiceProvider"
+            ]
+        }
+    }
+}
