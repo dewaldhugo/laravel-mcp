@@ -10,8 +10,8 @@
     ],
     "require": {
         "php": "^8.2",
-        "illuminate/console": "^10.0|^11.0",
-        "illuminate/support": "^10.0|^11.0"
+        "illuminate/console": "*",
+        "illuminate/support": "*"
     },
     "require-dev": {
         "phpunit/phpunit": "^10.5|^11.0",
